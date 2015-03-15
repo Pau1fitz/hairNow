@@ -1,3 +1,5 @@
+require 'bcrypt'
+
 class Client
 
   include DataMapper::Resource
@@ -22,10 +24,10 @@ class Client
   end
 
   def self.authenticate(email, password)
-    user = first(:email => email)
+    client = first(:email => email)
 
-    if user && BCrypt::Password.new(user.password_digest) == password
-      user
+    if client && BCrypt::Password.new(client.password_digest) == password
+      client
     else
       nil
     end
